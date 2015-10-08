@@ -1,5 +1,5 @@
 var knex = require('knex')({
-    client: 'mysql',
+    client: 'pg',
     connection: {
         host     : '127.0.0.1',
         user     : 'Brenna',
@@ -8,8 +8,8 @@ var knex = require('knex')({
         charset  : 'utf8'
   }
 });
-var Bookshelf = require('bookshelf')(knex);
 
+var Bookshelf = require('bookshelf')(knex);
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
