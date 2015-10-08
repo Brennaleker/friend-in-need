@@ -22,6 +22,33 @@ var users = require('./routes/users');
 
 var app = express();
 
+// Bookshelf model relationships
+// User model
+var User = Bookshelf.Model.extend({
+    tableName: 'users'
+});
+// Donor model
+var Donor = Bookshelf.Model.extend({
+    tableName: 'donors',
+    user: function () {
+        return this.belongsTo(User);
+    }
+});
+// Organization model
+var Organization = Bookshelf.Model.extend({
+    tableName: 'categories',
+    user: function () {
+       return this.belongsTo(User);
+    }
+});
+// Volunteer model
+var Volunteer = Bookshelf.Model.extend({
+    tableName: 'Volunteer',
+    user: function () {
+       return this.belongsTo(User);
+    }
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
