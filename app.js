@@ -66,8 +66,9 @@ var Volunteers = Bookshelf.Collection.extend({
 
 // ---------------User API calls------------------------
 // fetch all Users
-router.route('/users')
-.get(function (req, res) {
+// router.route('/users')
+// .get(function (req, res) {
+router.get('/users', function(req, res) {
   Users.forge()
   .fetch()
   .then(function (collection) {
@@ -335,7 +336,7 @@ router.route('/organizations/:id')
 
   // ---------------Volunteer API calls------------------------
   // fetch all Volunteers
-  router.route('/donors')
+  router.route('/volunteers')
   .get(function (req, res) {
     Volunteers.forge()
     .fetch()
@@ -363,7 +364,7 @@ router.route('/organizations/:id')
   });
 
   // fetch volunteer
-  router.route('/volutneers/:id')
+  router.route('/volunteers/:id')
     .get(function (req, res) {
       Volunteer.forge({id: req.params.id})
       .fetch()
@@ -418,7 +419,7 @@ router.route('/organizations/:id')
       });
     });
 
-app.use('/api', router);
+app.use('/', router);
 
 app.listen(3000, function() {
   console.log("✔ Express server listening on port %d in %s mode", 3000, app.get('env'));

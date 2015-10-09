@@ -1,5 +1,5 @@
 {
-  "name": "Friend in need",
+  "name": "friend-in-need",
   "version": "1.0.0",
   "description": "Capstone project",
   "main": "app.js",
@@ -7,12 +7,6 @@
     "type": "git",
     "url": "https://github.com/Brennaleker/friend-in-need"
   },
-  "keywords": [
-    "bookshelfjs",
-    "pg",
-    "express",
-    "capstone"
-  ],
   "dependencies": {
     "body-parser": "^1.4.3",
     "bookshelf": "^0.7.6",
@@ -21,3 +15,4 @@
     "lodash": "^2.4.1",
     "mysql": "^2.4.0"
   }
+}
