@@ -9,18 +9,25 @@ var knex = require('knex')({
   }
 });
 
-var Bookshelf = require('bookshelf')(knex);
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Bookshelf = require('bookshelf')(knex);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// application routing
+var router = express.Router();
+
+// body-parser middleware for handling request variables
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json()); 
 
 // Bookshelf model relationships
 // User model
