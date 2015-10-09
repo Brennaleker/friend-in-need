@@ -22,7 +22,8 @@ var Schema = {
 
   volunteers: {
     bio: { type: 'text', maxlength: 1000, nullable: false },
-    approved: { type: 'string', maxlength: 25, nullable: false }
+    approved: { type: 'string', maxlength: 25, nullable: false },
+    role: { type: 'text', maxlength: 150, nullable: false }
   },
 
   donors: {

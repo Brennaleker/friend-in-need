@@ -55,13 +55,15 @@ Donating to organizations that aid the homeless rather than directly to a homele
 - User Stories
 - Tasks organized and prioritized
 - db seeds written
+- tried Sequelize and Bookshelf ORMs decided to go with Bookshelf
+- API endpoints for users, donors, volunteers and organizations added to app.js
 
 #over the weekend
-- finished Bookshelf setup
+- finish Bookshelf setup
 - seed database
 
 #goals for next week
 - write tests for all endpoints/methods
-- write API endpoints
+- get all API endpoints functioning and passing tests
 - finish API
 - celebrate with a nap

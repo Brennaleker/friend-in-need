@@ -333,6 +333,91 @@ router.route('/organizations/:id')
     });
   });
 
+  // ---------------Volunteer API calls------------------------
+  // fetch all Volunteers
+  router.route('/donors')
+  .get(function (req, res) {
+    Volunteers.forge()
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // create a volunteer
+  .post(function (req, res) {
+    Volunteer.forge({
+      role: req.body.role,
+      approved: req.body.approved,
+      bio: req.body.bio
+    })
+    .save()
+    .then(function (volunteer) {
+      res.json({error: false, data: {id: volunteer.get('id')}});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+  // fetch volunteer
+  router.route('/volutneers/:id')
+    .get(function (req, res) {
+      Volunteer.forge({id: req.params.id})
+      .fetch()
+      .then(function (volunteer) {
+        if (!volunteer) {
+          res.status(404).json({error: true, data: {}});
+        }
+        else {
+          res.json({error: false, data: volunteer.toJSON()});
+        }
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    // update volunteer details
+    .put(function (req, res) {
+      Volunteer.forge({id: req.params.id})
+      .fetch({require: true})
+      .then(function (volunteer) {
+        volunteer.save({
+          bio: req.body.bio || volunteer.get('bio'),
+          role: req.body.role || volunteer.get('role'),
+          approve: req.body.approve || ('approve')
+        })
+        .then(function () {
+          res.json({error: false, data: {message: 'Volunteer details updated'}});
+        })
+        .otherwise(function (err) {
+          res.status(500).json({error: true, data: {message: err.message}});
+        });
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    // delete a volunteer
+    .delete(function (req, res) {
+      Volunteer.forge({id: req.params.id})
+      .fetch({require: true})
+      .then(function (volunteer) {
+        volunteer.destroy()
+        .then(function () {
+          res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
+        })
+        .otherwise(function (err) {
+          res.status(500).json({error: true, data: {message: err.message}});
+        });
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    });
+
 app.use('/api', router);
 
 app.listen(3000, function() {
