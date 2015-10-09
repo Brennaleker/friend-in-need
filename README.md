@@ -1,5 +1,5 @@
 #problem statement
-During January’s 1-night count over 10,000 homeless individuals were counted in King County and the number of those staying outdoors increased by 21% from the count in 2014. On a single night in January 2014, 578,424 homeless individuals were counted in the United States, 401,501 of those were found in shelters. Shelters and soup kitchens are scrambling for resources to serve the population. There are many people who would like to help but want to know without a doubt how their money will be used. This project would connect donors with organizations via wishlists in the style of DonorsChoose.org and guarantee that the money donated is used for the products requested.
+During January’s 1-night count over 10,000 homeless individuals were counted in King County and the number of those staying outdoors increased by 21% from the count in 2014. On a single night in January 2014, 578,424 homeless individuals were counted in the United States, 401,501 of those were found in shelters. Shelters and soup kitchens are scrambling for resources to serve the population. There are many people who would like to help but want to know without a doubt how their money will be used. This project would connect donors with organizations via wishlists(lists of products that have been reviewed and approved by volunteers) and guarantee that the money donated is used for the products requested.
 
 #user personas
 - shelters and soup kitchens requesting supplies
@@ -59,7 +59,7 @@ Donating to organizations that aid the homeless rather than directly to a homele
 - API endpoints for users, donors, volunteers and organizations added to app.js
 
 #over the weekend
-- finish Bookshelf setup
+- refactor Bookshelf setup
 - seed database
 
 #goals for next week
