@@ -10,6 +10,12 @@ var Donor = require('./models/donor.js');
 var Donors = require('./collections/donors.js');
 var Organization = require('./models/organization.js');
 var Organizations = require('./collections/organizations.js');
+var Item = require('./models/item.js');
+var Items = require('./collections/items.js');
+var Project = require('./models/project.js');
+var Projects = require('./collections/projects.js');
+var Gift = require('./models/gift.js');
+var Gifts = require('./collections/gifts.js');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 
