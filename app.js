@@ -13,9 +13,13 @@ var Bookshelf = require('bookshelf')(knex);
 var express = require('express');
 var app = express();
 var User = require("./models/user.js");
+var Users = require("./collections/users.js");
 var Volunteer = require('./models/volunteer.js');
+var Volunteers = require('./collections/volunteers.js');
 var Donor = require('./models/donor.js');
+var Donors = require('./collections/donors.js');
 var Organization = require('./models/organization.js');
+var Organizations = require('./collections/organizations.js');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 
@@ -26,25 +30,10 @@ var router = express.Router();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// collections
-var Users = Bookshelf.Collection.extend({
-  model: User
-});
-var Donors = Bookshelf.Collection.extend({
-  model: Donor
-});
-var Organizations = Bookshelf.Collection.extend({
-  model: Organization
-});
-var Volunteers = Bookshelf.Collection.extend({
-  model: Volunteer
-});
-
 // ---------------User API calls------------------------
 // fetch all Users
-// router.route('/users')
-// .get(function (req, res) {
-router.get('/users', function(req, res) {
+router.route('/users')
+.get(function (req, res) {
   Users.forge()
   .fetch()
   .then(function (collection) {
