@@ -26,27 +26,27 @@ app.use(bodyParser.json());
 
 // User model
 var User = Bookshelf.Model.extend({
-    tableName: 'users'
+    tableName: 'users',
 });
 // Donor model
 var Donor = Bookshelf.Model.extend({
     tableName: 'donors',
     user: function () {
-        return this.belongsTo(User);
+        return this.belongsTo(User, user_id);
     }
 });
 // Organization model
 var Organization = Bookshelf.Model.extend({
     tableName: 'categories',
     user: function () {
-       return this.belongsTo(User);
+       return this.belongsTo(User, user_id);
     }
 });
 // Volunteer model
 var Volunteer = Bookshelf.Model.extend({
-    tableName: 'Volunteer',
+    tableName: 'volunteers',
     user: function () {
-       return this.belongsTo(User);
+       return this.belongsTo(User, user_id);
     }
 });
 

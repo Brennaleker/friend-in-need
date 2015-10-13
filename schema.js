@@ -21,12 +21,16 @@ var Schema = {
   },
 
   volunteers: {
+    id: { type: 'increments', nullable: false, primary: true },
+    user_id: { type: 'integer', nullable: false, unsigned: true },
     bio: { type: 'text', maxlength: 1000, nullable: false },
     approved: { type: 'string', maxlength: 25, nullable: false },
     role: { type: 'text', maxlength: 150, nullable: false }
   },
 
   donors: {
+    id: { type: 'increments', nullable: false, primary: true },
+    user_id: { type: 'integer', nullable: false, unsigned: true },
     billing_address_1: { type: 'string', maxlength: 150, nullable: false  },
     billing_address_2: { type: 'string', maxlength: 150, nullable: false },
     billing_city: { type: 'string', maxlength: 150, nullable: false },
