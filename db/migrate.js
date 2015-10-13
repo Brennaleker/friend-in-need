@@ -1,13 +1,4 @@
-var knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host: 'localhost',
-    user: 'Brenna',
-    password: null,
-    database: 'shelter_helper',
-    charset: 'utf8'
-  }
-});
+var knex = require('./knexfile.js');
 var Bookshelf = require('bookshelf')(knex);
 var Schema = require('./schema');
 var sequence = require('when/sequence');

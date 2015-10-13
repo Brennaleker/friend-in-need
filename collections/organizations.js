@@ -1,4 +1,4 @@
-var knex = require('../knexfile.js');
+var knex = require('../db/knexfile.js');
 var Organization = require("../models/organization.js");
 var Bookshelf = require('bookshelf')(knex);
 
