@@ -12,6 +12,10 @@ var knex = require('knex')({
 var Bookshelf = require('bookshelf')(knex);
 var express = require('express');
 var app = express();
+var User = require("./models/user.js");
+var Volunteer = require('./models/volunteer.js');
+var Donor = require('./models/donor.js');
+var Organization = require('./models/organization.js');
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 
@@ -21,34 +25,6 @@ var router = express.Router();
 // body-parser middleware for handling request variables
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-// ------------Models-----------------
-
-// User model
-var User = Bookshelf.Model.extend({
-    tableName: 'users',
-});
-// Donor model
-var Donor = Bookshelf.Model.extend({
-    tableName: 'donors',
-    user: function () {
-        return this.belongsTo(User, user_id);
-    }
-});
-// Organization model
-var Organization = Bookshelf.Model.extend({
-    tableName: 'categories',
-    user: function () {
-       return this.belongsTo(User, user_id);
-    }
-});
-// Volunteer model
-var Volunteer = Bookshelf.Model.extend({
-    tableName: 'volunteers',
-    user: function () {
-       return this.belongsTo(User, user_id);
-    }
-});
 
 // collections
 var Users = Bookshelf.Collection.extend({
