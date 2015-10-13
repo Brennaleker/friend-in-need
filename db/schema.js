@@ -36,6 +36,42 @@ var Schema = {
     billing_city: { type: 'string', maxlength: 150, nullable: false },
     billing_state: { type: 'string', maxlength: 150, nullable: false  },
     billing_postal_code: { type: 'string', maxlength: 150, nullable: false }
+  },
+
+  items: {
+    id: { type: 'increments', nullable: false, primary: true },
+    project_id: { type: 'integer', nullable: false, unsigned: true },
+    name: { type: 'string', maxlenght: 150, nullable: false },
+    description: { type: 'text' },
+    url: { type: 'string', maxlength: 250, nullable: false },
+    quantity: { type: 'integer', nullable: false },
+    price_per: { type: 'integer', nullable: false },
+    total: {type: 'integer', nullable: false }
+  },
+
+  gifts: {
+    id: { type: 'increments', nullable: false, primary: true },
+    project_id: { type: 'integer', nullable: false, unsigned: true },
+    donor_id: { type: 'integer', nullable: false, unsigned: true },
+    ammount: { type: 'integer', nullable: false },
+    status: { type: 'string', maxlength: 100, nullabe: false },
+    cc_name: { type: 'string', maxlenght: 150, nullable: false },
+    cc_exp: { type: 'integer', nullable: false },
+    cc_ccv: { type: 'integer', nullable: false },
+    cc_number: { type: 'integer', maxlength: 16, nullable: false},
+    cc_address_1: { type: 'string', maxlength: 150, nullable: false  },
+    cc_address_2: { type: 'string', maxlength: 150, nullable: false },
+    cc_city: { type: 'string', maxlength: 150, nullable: false },
+    cc_state: { type: 'string', maxlength: 150, nullable: false  },
+    cc_postal_code: { type: 'string', maxlength: 150, nullable: false }
+  }
+
+  projects: {
+    id: { type: 'increments', nullable: false, primary: true },
+    organization_id: { type: 'integer', nullable: false, unsigned: true },
+    title: { type: 'string', maxlength: 250, nullable: false },
+    decriptiong: { type: 'text', maxlength: 750, nullable: false },
+    status: { type: 'string', nullable: false }
   }
 };
 

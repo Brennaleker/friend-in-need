@@ -4,9 +4,10 @@
   "description": "Capstone project",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node ./app.js",
     "test": "clear; DB=test mocha --recursive",
-    "db:migrate": "node migrate.js"
+    "migrate": "node ./db/migrate.js",
+    "seed": "node ./db/seed.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "body-parser": "^1.4.3",
     "bookshelf": "^0.7.6",
     "express": "^4.4.5",
-    "knex": "^0.6.22",
+    "knex": "^0.6.23",
     "lodash": "^2.4.1",
     "mocha": "^2.3.3",
     "mysql": "^2.4.0",
