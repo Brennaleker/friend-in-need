@@ -1,4 +1,4 @@
-var knexfile = require('knex')({
+var knex = require('knex')({
     client: 'pg',
     connection: {
       host     : '127.0.0.1',
@@ -8,8 +8,8 @@ var knexfile = require('knex')({
       charset  : 'utf8'
     },
     seeds: {
-      directory: './seed.js'
+      directory: './db/seed.js'
     }
 });
 
-module.exports = knexfile;
+module.exports = knex;
