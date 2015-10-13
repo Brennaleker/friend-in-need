@@ -64,7 +64,7 @@ var Schema = {
     cc_city: { type: 'string', maxlength: 150, nullable: false },
     cc_state: { type: 'string', maxlength: 150, nullable: false  },
     cc_postal_code: { type: 'string', maxlength: 150, nullable: false }
-  }
+  },
 
   projects: {
     id: { type: 'increments', nullable: false, primary: true },
