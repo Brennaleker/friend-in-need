@@ -1,3 +1,5 @@
+'use strict';
+
 exports.seed = function(knex, Promise) {
   return knex.table('users').insert([
       { id: 1, username: "Casper789", password: "password",
