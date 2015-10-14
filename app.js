@@ -1,119 +1,129 @@
-var knex = require('./db/knexfile.js');
-var Bookshelf = require('bookshelf')(knex);
-var express = require('express');
-var app = express();
-var User = require("./models/user.js");
-var Users = require("./collections/users.js");
-var Volunteer = require('./models/volunteer.js');
-var Volunteers = require('./collections/volunteers.js');
-var Donor = require('./models/donor.js');
-var Donors = require('./collections/donors.js');
-var Organization = require('./models/organization.js');
-var Organizations = require('./collections/organizations.js');
-var Item = require('./models/item.js');
-var Items = require('./collections/items.js');
-var Project = require('./models/project.js');
-var Projects = require('./collections/projects.js');
-var Gift = require('./models/gift.js');
-var Gifts = require('./collections/gifts.js');
-var bodyParser = require('body-parser');
-var _ = require('lodash');
+var knex = require('./db/knexfile.js'),
+    Bookshelf = require('bookshelf')(knex),
+    express = require('express'),
+    app = express(),
+    fs = require('fs'),
+// var User = require("./models/user.js");
+// var Users = require("./collections/users.js");
+    //users = require('./controllers/users.js')
+    Volunteer = require('./models/volunteer.js'),
+    Volunteers = require('./collections/volunteers.js'),
+    Donor = require('./models/donor.js'),
+    Donors = require('./collections/donors.js'),
+    Organization = require('./models/organization.js'),
+    Organizations = require('./collections/organizations.js'),
+    Item = require('./models/item.js'),
+    Items = require('./collections/items.js'),
+    Project = require('./models/project.js'),
+    Projects = require('./collections/projects.js'),
+    Gift = require('./models/gift.js'),
+    Gifts = require('./collections/gifts.js'),
+    bodyParser = require('body-parser'),
+    _ = require('lodash'),
 
 // application routing
-var router = express.Router();
+    router = express.Router();
 
 // body-parser middleware for handling request variables
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// ---------------User API calls------------------------
-// fetch all Users
-router.route('/users')
-.get(function (req, res) {
-  Users.forge()
-  .fetch()
-  .then(function (collection) {
-    res.json({error: false, data: collection.toJSON()});
-  })
-  .otherwise(function (err) {
-    res.status(500).json({error: true, data: {message: err.message}});
-  });
-})
-// create a user
-.post(function (req, res) {
-  User.forge({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name
-  })
-  .save()
-  .then(function (user) {
-    res.json({error: false, data: {id: user.get('id')}});
-  })
-  .otherwise(function (err) {
-    res.status(500).json({error: true, data: {message: err.message}});
-  });
+// dynamically inclue controllers
+fs.readdirSync('./controllers').forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+    var route = require('./controllers/' + file);
+    route.controller(app);
+  }
 });
 
-// fetch user
-router.route('/users/:id')
-  .get(function (req, res) {
-    User.forge({id: req.params.id})
-    .fetch()
-    .then(function (user) {
-      if (!user) {
-        res.status(404).json({error: true, data: {}});
-      }
-      else {
-        res.json({error: false, data: user.toJSON()});
-      }
-    })
-    .otherwise(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
-    });
-  })
-  // update user details
-  .put(function (req, res) {
-    User.forge({id: req.params.id})
-    .fetch({require: true})
-    .then(function (user) {
-      user.save({
-        name: req.body.name || user.get('name'),
-        email: req.body.email || user.get('email'),
-        password: req.body.password || user.get('password'),
-        first_name: req.body.first_name || user.get('first_name'),
-        last_name: req.body.last_name || user.get('last_name')
-      })
-      .then(function () {
-        res.json({error: false, data: {message: 'User details updated'}});
-      })
-      .otherwise(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-      });
-    })
-    .otherwise(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
-    });
-  })
-  // delete a user
-  .delete(function (req, res) {
-    User.forge({id: req.params.id})
-    .fetch({require: true})
-    .then(function (user) {
-      user.destroy()
-      .then(function () {
-        res.json({error: true, data: {message: 'User successfully deleted'}});
-      })
-      .otherwise(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-      });
-    })
-    .otherwise(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
-    });
-  });
+// // ---------------User API calls------------------------
+// // fetch all Users
+// router.route('/users')
+// .get(function (req, res) {
+//   Users.forge()
+//   .fetch()
+//   .then(function (collection) {
+//     res.json({error: false, data: collection.toJSON()});
+//   })
+//   .otherwise(function (err) {
+//     res.status(500).json({error: true, data: {message: err.message}});
+//   });
+// })
+// // create a user
+// .post(function (req, res) {
+//   User.forge({
+//     username: req.body.username,
+//     password: req.body.password,
+//     email: req.body.email,
+//     first_name: req.body.first_name,
+//     last_name: req.body.last_name
+//   })
+//   .save()
+//   .then(function (user) {
+//     res.json({error: false, data: {id: user.get('id')}});
+//   })
+//   .otherwise(function (err) {
+//     res.status(500).json({error: true, data: {message: err.message}});
+//   });
+// });
+//
+// // fetch user
+// router.route('/users/:id')
+//   .get(function (req, res) {
+//     User.forge({id: req.params.id})
+//     .fetch()
+//     .then(function (user) {
+//       if (!user) {
+//         res.status(404).json({error: true, data: {}});
+//       }
+//       else {
+//         res.json({error: false, data: user.toJSON()});
+//       }
+//     })
+//     .otherwise(function (err) {
+//       res.status(500).json({error: true, data: {message: err.message}});
+//     });
+//   })
+//   // update user details
+//   .put(function (req, res) {
+//     User.forge({id: req.params.id})
+//     .fetch({require: true})
+//     .then(function (user) {
+//       user.save({
+//         name: req.body.name || user.get('name'),
+//         email: req.body.email || user.get('email'),
+//         password: req.body.password || user.get('password'),
+//         first_name: req.body.first_name || user.get('first_name'),
+//         last_name: req.body.last_name || user.get('last_name')
+//       })
+//       .then(function () {
+//         res.json({error: false, data: {message: 'User details updated'}});
+//       })
+//       .otherwise(function (err) {
+//         res.status(500).json({error: true, data: {message: err.message}});
+//       });
+//     })
+//     .otherwise(function (err) {
+//       res.status(500).json({error: true, data: {message: err.message}});
+//     });
+//   })
+//   // delete a user
+//   .delete(function (req, res) {
+//     User.forge({id: req.params.id})
+//     .fetch({require: true})
+//     .then(function (user) {
+//       user.destroy()
+//       .then(function () {
+//         res.json({error: true, data: {message: 'User successfully deleted'}});
+//       })
+//       .otherwise(function (err) {
+//         res.status(500).json({error: true, data: {message: err.message}});
+//       });
+//     })
+//     .otherwise(function (err) {
+//       res.status(500).json({error: true, data: {message: err.message}});
+//     });
+//   });
 
 // ---------------Donor API calls------------------------
 // fetch all Donors

@@ -1,16 +1,15 @@
 var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
     express = require('express'),
-    User = require('../models/user.js'),
-    Users = require('../collections/users.js'),
+    Item = require('../models/item.js'),
+    Items = require('../collections/items.js'),
     router = express.Router();
 
-console.log('totally getting to users controller');
 module.exports.controller = function(app) {
-  // fetch all Users
-  router.route('/users')
+  // fetch all Items
+  router.route('/items')
   .get(function (req, res) {
-    Users.forge()
+    Items.forge()
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -19,55 +18,58 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // create a user
+  // create an item
   .post(function (req, res) {
-    User.forge({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name
+    Item.forge({
+      name:  req.body.name,
+      description: req.body.description,
+      url: req.body.url,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      total: req.body.total
     })
     .save()
-    .then(function (user) {
-      res.json({error: false, data: {id: user.get('id')}});
+    .then(function (item) {
+      res.json({error: false, data: {id: item.get('id')}});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
 
-  // fetch user
-  router.route('/users/:id')
+  // fetch item
+  router.route('/items/:id')
   .get(function (req, res) {
-    User.forge({id: req.params.id})
+    Item.forge({id: req.params.id})
     .fetch()
-    .then(function (user) {
-      if (!user) {
+    .then(function (item) {
+      if (!item) {
         res.status(404).json({error: true, data: {}});
       }
       else {
-        res.json({error: false, data: user.toJSON()});
+        res.json({error: false, data: item.toJSON()});
       }
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // update user details
+  // update volunteer details
   .put(function (req, res) {
-    User.forge({id: req.params.id})
+    Item.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.save({
-        name: req.body.name || user.get('name'),
-        email: req.body.email || user.get('email'),
-        password: req.body.password || user.get('password'),
-        first_name: req.body.first_name || user.get('first_name'),
-        last_name: req.body.last_name || user.get('last_name')
+    .then(function (item) {
+      item.save({
+        name: req.body.name || ('name'),
+        vendor: req.body.vendor || ('vendor'),
+        description: req.body.description || ('description'),
+        url: req.body.url || ('url'),
+        price: req.body.price || ('price'),
+        quantity: req.body.quantity || ('quantity'),
+        total: req.body.total || ('total')
       })
       .then(function () {
-        res.json({error: false, data: {message: 'User details updated'}});
+        res.json({error: false, data: {message: 'Item details updated'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
@@ -77,14 +79,14 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // delete a user
+  // delete a item
   .delete(function (req, res) {
-    User.forge({id: req.params.id})
+    Item.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.destroy()
+    .then(function (item) {
+      item.destroy()
       .then(function () {
-        res.json({error: true, data: {message: 'User successfully deleted'}});
+        res.json({error: true, data: {message: 'Item successfully deleted'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});

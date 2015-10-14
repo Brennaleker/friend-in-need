@@ -1,16 +1,15 @@
 var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
     express = require('express'),
-    User = require('../models/user.js'),
-    Users = require('../collections/users.js'),
+    Volunteer = require('../models/volunteer.js'),
+    Volunteers = require('../collections/volunteers.js'),
     router = express.Router();
 
-console.log('totally getting to users controller');
 module.exports.controller = function(app) {
-  // fetch all Users
-  router.route('/users')
+  // fetch all Volunteers
+  router.route('/volunteers')
   .get(function (req, res) {
-    Users.forge()
+    Volunteers.forge()
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -19,55 +18,51 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // create a user
+  // create a volunteer
   .post(function (req, res) {
-    User.forge({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name
+    Volunteer.forge({
+      role: req.body.role,
+      approved: req.body.approved,
+      bio: req.body.bio
     })
     .save()
-    .then(function (user) {
-      res.json({error: false, data: {id: user.get('id')}});
+    .then(function (volunteer) {
+      res.json({error: false, data: {id: volunteer.get('id')}});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
 
-  // fetch user
-  router.route('/users/:id')
+  // fetch volunteer
+  router.route('/volunteers/:id')
   .get(function (req, res) {
-    User.forge({id: req.params.id})
+    Volunteer.forge({id: req.params.id})
     .fetch()
-    .then(function (user) {
-      if (!user) {
+    .then(function (volunteer) {
+      if (!volunteer) {
         res.status(404).json({error: true, data: {}});
       }
       else {
-        res.json({error: false, data: user.toJSON()});
+        res.json({error: false, data: volunteer.toJSON()});
       }
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // update user details
+  // update volunteer details
   .put(function (req, res) {
-    User.forge({id: req.params.id})
+    Volunteer.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.save({
-        name: req.body.name || user.get('name'),
-        email: req.body.email || user.get('email'),
-        password: req.body.password || user.get('password'),
-        first_name: req.body.first_name || user.get('first_name'),
-        last_name: req.body.last_name || user.get('last_name')
+    .then(function (volunteer) {
+      volunteer.save({
+        bio: req.body.bio || ('bio'),
+        role: req.body.role || ('role'),
+        approve: req.body.approve || ('approve')
       })
       .then(function () {
-        res.json({error: false, data: {message: 'User details updated'}});
+        res.json({error: false, data: {message: 'Volunteer details updated'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
@@ -77,14 +72,14 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // delete a user
+  // delete a volunteer
   .delete(function (req, res) {
-    User.forge({id: req.params.id})
+    Volunteer.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.destroy()
+    .then(function (volunteer) {
+      volunteer.destroy()
       .then(function () {
-        res.json({error: true, data: {message: 'User successfully deleted'}});
+        res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});

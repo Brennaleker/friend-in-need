@@ -1,16 +1,15 @@
 var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
     express = require('express'),
-    User = require('../models/user.js'),
-    Users = require('../collections/users.js'),
+    Donor = require('../models/donor.js'),
+    Donors = require('../collections/donors.js'),
     router = express.Router();
 
-console.log('totally getting to users controller');
 module.exports.controller = function(app) {
-  // fetch all Users
-  router.route('/users')
+  // fetch all Donors
+  router.route('/donors')
   .get(function (req, res) {
-    Users.forge()
+    Donors.forge()
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -19,55 +18,54 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // create a user
+  // create a donor
   .post(function (req, res) {
-    User.forge({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name
+    Donor.forge({
+      billing_address_1: req.body.billing_address_1,
+      billing_address_2: req.body.billing_address_2,
+      billing_city: req.body.billing_city,
+      billing_state: req.body.billing_state,
+      billing_postal_code: req.body.billing_postal_code
     })
     .save()
-    .then(function (user) {
-      res.json({error: false, data: {id: user.get('id')}});
+    .then(function (donor) {
+      res.json({error: false, data: {id: donor.get('id')}});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
 
-  // fetch user
-  router.route('/users/:id')
+  // fetch donor
+  router.route('/donors/:id')
   .get(function (req, res) {
-    User.forge({id: req.params.id})
+    Donor.forge({id: req.params.id})
     .fetch()
-    .then(function (user) {
-      if (!user) {
+    .then(function (donor) {
+      if (!donor) {
         res.status(404).json({error: true, data: {}});
       }
       else {
-        res.json({error: false, data: user.toJSON()});
+        res.json({error: false, data: donor.toJSON()});
       }
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // update user details
+  // update donor details
   .put(function (req, res) {
-    User.forge({id: req.params.id})
+    Donor.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.save({
-        name: req.body.name || user.get('name'),
-        email: req.body.email || user.get('email'),
-        password: req.body.password || user.get('password'),
-        first_name: req.body.first_name || user.get('first_name'),
-        last_name: req.body.last_name || user.get('last_name')
+    .then(function (donor) {
+      donor.save({
+        billing_address_1: req.body.billing_address_1 || donor.get('billing_address_1'),
+        billing_address_2: req.body.billing_address_2 || donor.get('billing_address_2'),
+        billing_city: req.body.billing_city || ('billing_city'),
+        billing_state: req.body.billing_state || ('billing_state')
       })
       .then(function () {
-        res.json({error: false, data: {message: 'User details updated'}});
+        res.json({error: false, data: {message: 'Donor details updated'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
@@ -77,14 +75,14 @@ module.exports.controller = function(app) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // delete a user
+  // delete a donor
   .delete(function (req, res) {
-    User.forge({id: req.params.id})
+    Donor.forge({id: req.params.id})
     .fetch({require: true})
-    .then(function (user) {
-      user.destroy()
+    .then(function (donor) {
+      donor.destroy()
       .then(function () {
-        res.json({error: true, data: {message: 'User successfully deleted'}});
+        res.json({error: true, data: {message: 'Donor successfully deleted'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
