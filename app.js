@@ -295,90 +295,352 @@ router.route('/organizations/:id')
     });
   });
 
-  // ---------------Volunteer API calls------------------------
-  // fetch all Volunteers
-  router.route('/volunteers')
+// ---------------Volunteer API calls------------------------
+// fetch all Volunteers
+router.route('/volunteers')
+.get(function (req, res) {
+  Volunteers.forge()
+  .fetch()
+  .then(function (collection) {
+    res.json({error: false, data: collection.toJSON()});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+})
+// create a volunteer
+.post(function (req, res) {
+  Volunteer.forge({
+    role: req.body.role,
+    approved: req.body.approved,
+    bio: req.body.bio
+  })
+  .save()
+  .then(function (volunteer) {
+    res.json({error: false, data: {id: volunteer.get('id')}});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+});
+
+// fetch volunteer
+router.route('/volunteers/:id')
   .get(function (req, res) {
-    Volunteers.forge()
+    Volunteer.forge({id: req.params.id})
     .fetch()
-    .then(function (collection) {
-      res.json({error: false, data: collection.toJSON()});
+    .then(function (volunteer) {
+      if (!volunteer) {
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        res.json({error: false, data: volunteer.toJSON()});
+      }
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   })
-  // create a volunteer
-  .post(function (req, res) {
-    Volunteer.forge({
-      role: req.body.role,
-      approved: req.body.approved,
-      bio: req.body.bio
-    })
-    .save()
+  // update volunteer details
+  .put(function (req, res) {
+    Volunteer.forge({id: req.params.id})
+    .fetch({require: true})
     .then(function (volunteer) {
-      res.json({error: false, data: {id: volunteer.get('id')}});
+      volunteer.save({
+        bio: req.body.bio || ('bio'),
+        role: req.body.role || ('role'),
+        approve: req.body.approve || ('approve')
+      })
+      .then(function () {
+        res.json({error: false, data: {message: 'Volunteer details updated'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a volunteer
+  .delete(function (req, res) {
+    Volunteer.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (volunteer) {
+      volunteer.destroy()
+      .then(function () {
+        res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
 
-  // fetch volunteer
-  router.route('/volunteers/:id')
-    .get(function (req, res) {
-      Volunteer.forge({id: req.params.id})
-      .fetch()
-      .then(function (volunteer) {
-        if (!volunteer) {
-          res.status(404).json({error: true, data: {}});
-        }
-        else {
-          res.json({error: false, data: volunteer.toJSON()});
-        }
-      })
-      .otherwise(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-      });
+// ---------------Item API calls------------------------
+// fetch all Items
+router.route('/items')
+.get(function (req, res) {
+  Items.forge()
+  .fetch()
+  .then(function (collection) {
+    res.json({error: false, data: collection.toJSON()});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+})
+// create an item
+.post(function (req, res) {
+  Item.forge({
+    name:  req.body.name,
+    description: req.body.description,
+    url: req.body.url,
+    price: req.body.price,
+    quantity: req.body.quantity,
+    total: req.body.total
+  })
+  .save()
+  .then(function (item) {
+    res.json({error: false, data: {id: item.get('id')}});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+});
+
+// fetch item
+router.route('/items/:id')
+  .get(function (req, res) {
+    Item.forge({id: req.params.id})
+    .fetch()
+    .then(function (item) {
+      if (!item) {
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        res.json({error: false, data: item.toJSON()});
+      }
     })
-    // update volunteer details
-    .put(function (req, res) {
-      Volunteer.forge({id: req.params.id})
-      .fetch({require: true})
-      .then(function (volunteer) {
-        volunteer.save({
-          bio: req.body.bio || volunteer.get('bio'),
-          role: req.body.role || volunteer.get('role'),
-          approve: req.body.approve || ('approve')
-        })
-        .then(function () {
-          res.json({error: false, data: {message: 'Volunteer details updated'}});
-        })
-        .otherwise(function (err) {
-          res.status(500).json({error: true, data: {message: err.message}});
-        });
-      })
-      .otherwise(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-      });
-    })
-    // delete a volunteer
-    .delete(function (req, res) {
-      Volunteer.forge({id: req.params.id})
-      .fetch({require: true})
-      .then(function (volunteer) {
-        volunteer.destroy()
-        .then(function () {
-          res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
-        })
-        .otherwise(function (err) {
-          res.status(500).json({error: true, data: {message: err.message}});
-        });
-      })
-      .otherwise(function (err) {
-        res.status(500).json({error: true, data: {message: err.message}});
-      });
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
     });
+  })
+  // update volunteer details
+  .put(function (req, res) {
+    Item.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (item) {
+      item.save({
+        name: req.body.name || ('name'),
+        vendor: req.body.vendor || ('vendor'),
+        description: req.body.description || ('description'),
+        url: req.body.url || ('url'),
+        price: req.body.price || ('price'),
+        quantity: req.body.quantity || ('quantity'),
+        total: req.body.total || ('total')
+      })
+      .then(function () {
+        res.json({error: false, data: {message: 'Item details updated'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a item
+  .delete(function (req, res) {
+    Item.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (item) {
+      item.destroy()
+      .then(function () {
+        res.json({error: true, data: {message: 'Item successfully deleted'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+// ---------------Project API calls------------------------
+// fetch all Projects
+router.route('/projects')
+.get(function (req, res) {
+  Projects.forge()
+  .fetch()
+  .then(function (collection) {
+    res.json({error: false, data: collection.toJSON()});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+})
+// create a volunteer
+.post(function (req, res) {
+  Project.forge({
+    title: req.body.title,
+    description: req.body.description,
+    status: req.body.status
+  })
+  .save()
+  .then(function (project) {
+    res.json({error: false, data: {id: project.get('id')}});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+});
+
+// fetch project
+router.route('/projects/:id')
+  .get(function (req, res) {
+    Project.forge({id: req.params.id})
+    .fetch()
+    .then(function (project) {
+      if (!project) {
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        res.json({error: false, data: project.toJSON()});
+      }
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // update project details
+  .put(function (req, res) {
+    Project.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (project) {
+      project.save({
+        title: req.body.title || ('title'),
+        description: req.body.description || ('description'),
+        status: req.body.status || ('status')
+      })
+      .then(function () {
+        res.json({error: false, data: {message: 'Project details updated'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a project
+  .delete(function (req, res) {
+    Project.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (project) {
+      volunteer.destroy()
+      .then(function () {
+        res.json({error: true, data: {message: 'Project successfully deleted'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+// ---------------Gift API calls------------------------
+// fetch all Gifts
+router.route('/gifts')
+.get(function (req, res) {
+  Gifts.forge()
+  .fetch()
+  .then(function (collection) {
+    res.json({error: false, data: collection.toJSON()});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+})
+// create a gift
+.post(function (req, res) {
+  Gift.forge({
+    ammount: req.body.ammount,
+    status: req.body.status,
+    bio: req.body.bio
+  })
+  .save()
+  .then(function (gift) {
+    res.json({error: false, data: {id: gift.get('id')}});
+  })
+  .otherwise(function (err) {
+    res.status(500).json({error: true, data: {message: err.message}});
+  });
+});
+
+// fetch gift
+router.route('/gifts/:id')
+  .get(function (req, res) {
+    Gift.forge({id: req.params.id})
+    .fetch()
+    .then(function (gift) {
+      if (!gift) {
+        res.status(404).json({error: true, data: {}});
+      }
+      else {
+        res.json({error: false, data: gift.toJSON()});
+      }
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // update gift details
+  .put(function (req, res) {
+    Gift.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (gift) {
+      gift.save({
+        status: req.body.status || ('status'),
+        ammount: req.body.ammount || ('ammount'),
+        approve: req.body.approve || ('approve')
+      })
+      .then(function () {
+        res.json({error: false, data: {message: 'Gift details updated'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  })
+  // delete a gift
+  .delete(function (req, res) {
+    Gift.forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (gift) {
+      gift.destroy()
+      .then(function () {
+        res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
+      })
+      .otherwise(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
 
 app.use('/', router);
 
