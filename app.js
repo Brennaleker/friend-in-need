@@ -575,7 +575,15 @@ router.route('/gifts')
   Gift.forge({
     ammount: req.body.ammount,
     status: req.body.status,
-    bio: req.body.bio
+    cc_name: req.body.cc_name,
+    cc_exp: req.body.cc_exp,
+    cc_number: req.body.cc_number,
+    cc_ccv: req.body.cc_ccv,
+    cc_address_1: req.body.cc_address_1,
+    cc_address_2: req.body.cc_address_2,
+    cc_city: req.body.city,
+    cc_state: req.body.state,
+    cc_postal_code: req.body.cc_postal_code
   })
   .save()
   .then(function (gift) {
@@ -611,7 +619,15 @@ router.route('/gifts/:id')
       gift.save({
         status: req.body.status || ('status'),
         ammount: req.body.ammount || ('ammount'),
-        approve: req.body.approve || ('approve')
+        cc_name: req.body.cc_name || ('cc_name'),
+        cc_number: req.body.cc_number || ('cc_number'),
+        cc_exp: req.body.cc_exp || ('cc_exp'),
+        cc_ccv: req.body.cc_ccv || ('cc_ccv'),
+        cc_address_1: req.body.cc_address_1 || ('cc_address_1'),
+        cc_address_2: req.body.cc_address_2 || ('cc_address_2'),
+        cc_city: req.body.cc_city || ('cc_city'),
+        cc_state: req.body.cc_state || ('cc_state'),
+        cc_postal_code: req.body.cc_postal_code || ('cc_postal_code')
       })
       .then(function () {
         res.json({error: false, data: {message: 'Gift details updated'}});
