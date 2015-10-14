@@ -2,10 +2,9 @@ var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
     express = require('express'),
     Organization = require('../models/organization.js'),
-    Organizations = require('../collections/organizations.js'),
-    router = express.Router();
+    Organizations = require('../collections/organizations.js')
 
-module.exports.controller = function(app) {
+module.exports.controller = function(app, router) {
   // fetch all Organizations
   router.route('/organizations')
   .get(function (req, res) {
