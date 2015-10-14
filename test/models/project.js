@@ -3,11 +3,11 @@ var chai = require('chai'),
     Bookshelf = require('bookshelf')(knex),
     expect = require('chai').expect,
     Organization = require('../../models/organization.js'),
-    User = require('../../models/user.js');
+    Project = require('../../models/project.js');
 chai.use(require('chai-bookshelf'));
 
-describe('Organization Relationships', function() {
-  it('belongs to a user', function() {
-    expect(Organization).to.belongTo(User);
+describe('Project Relationships', function() {
+  it('belongs to an organization', function() {
+    expect(Project).to.belongTo(Organization);
   })
 });

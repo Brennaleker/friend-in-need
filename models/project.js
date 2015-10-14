@@ -1,10 +1,12 @@
-var knex = require('../db/knexfile.js');
-var Bookshelf = require('bookshelf')(knex);
+var knex = require('../db/knexfile.js'),
+    Bookshelf = require('bookshelf')(knex),
+    Project = require('./project.js'),
+    Organization = require('./organization.js');
 
 var Project = Bookshelf.Model.extend({
     tableName: 'projects',
-    user: function () {
-        return this.belongsTo(Organization, organization_id);
+    organization: function () {
+      return this.belongsTo(Organization);
     }
 });
 

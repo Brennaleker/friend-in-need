@@ -3,11 +3,11 @@ var chai = require('chai'),
     Bookshelf = require('bookshelf')(knex),
     expect = require('chai').expect,
     Donor = require('../../models/donor.js'),
-    User = require('../../models/user.js');
+    Gift = require('../../models/gift.js');
 chai.use(require('chai-bookshelf'));
 
-describe('Donor Relationships', function() {
-  it('belongs to a user', function() {
-    expect(Donor).to.belongTo(User);
+describe('Gift Relationships', function() {
+  it('belongs to a donor', function() {
+    expect(Gift).to.belongTo(Donor);
   })
 });

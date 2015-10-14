@@ -1,10 +1,11 @@
-var knex = require('../db/knexfile.js');
-var Bookshelf = require('bookshelf')(knex);
+var knex = require('../db/knexfile.js'),
+    Bookshelf = require('bookshelf')(knex),
+    Donor = require('./donor.js');
 
 var Gift = Bookshelf.Model.extend({
     tableName: 'gifts',
-    user: function () {
-        return this.belongsTo(Donor, donor_id);
+    donor: function () {
+      return this.belongsTo(Donor);
     }
 });
 
