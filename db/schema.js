@@ -70,8 +70,9 @@ var Schema = {
     id: { type: 'increments', nullable: false, primary: true },
     organization_id: { type: 'integer', nullable: false, unsigned: true },
     title: { type: 'string', maxlength: 250, nullable: false },
-    decriptiong: { type: 'text', maxlength: 750, nullable: false },
-    status: { type: 'string', nullable: false }
+    decription: { type: 'text', maxlength: 750, nullable: false },
+    status: { type: 'string', nullable: false },
+    total: { type: 'float' }
   }
 };
 
