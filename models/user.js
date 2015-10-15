@@ -1,8 +1,7 @@
 require('./donor.js');
-require('./organization.js');
 var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
-    // Organization = require('./organization.js'),
+    Organization = require('./organization.js'),
     Volunteer = require('./volunteer.js');
 
 var User = Bookshelf.Model.extend({
@@ -13,7 +12,7 @@ var User = Bookshelf.Model.extend({
     volunteer: function(){
       return this.hasOne(Volunteer);
     },
-    organiztion: function(){
+    organization: function(){
       return this.hasOne(Organization);
     },
     project: function(){
