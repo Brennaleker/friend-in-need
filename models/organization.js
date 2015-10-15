@@ -1,6 +1,6 @@
+require('./user.js');
 var knex = require('../db/knexfile.js'),
-    Bookshelf = require('bookshelf')(knex),
-    User = require('./user.js');
+    Bookshelf = require('bookshelf')(knex);
 
 var Organization = Bookshelf.Model.extend({
     tableName: 'organizations',
