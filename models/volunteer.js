@@ -5,7 +5,7 @@ var knex = require('../db/knexfile.js'),
 var Volunteer = Bookshelf.Model.extend({
     tableName: 'volunteers',
     user: function () {
-       return this.belongsTo(User);
+       return this.belongsTo(User, 'user_id');
     }
 });
 

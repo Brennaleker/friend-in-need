@@ -2,7 +2,9 @@ var knex = require('../db/knexfile.js'),
     Bookshelf = require('bookshelf')(knex),
     express = require('express'),
     Organization = require('../models/organization.js'),
-    Organizations = require('../collections/organizations.js')
+    Organizations = require('../collections/organizations.js'),
+    Project = require('../models/project.js'),
+    Projects = require('../collections/projects.js');
 
 module.exports.controller = function(app, router) {
   // fetch all Organizations
@@ -95,4 +97,17 @@ module.exports.controller = function(app, router) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
+  router.route('/organizations/projects')
+  .get(function (req, res) {
+    Project.forge({id: req.params.organization_id})
+    .fetch({withRelated: ['organizations']})
+    .then(function (project) {
+      var organizations = project.related('organizations');
+      res.json({error: false, data: organizations.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
 }

@@ -6,7 +6,7 @@ var knex = require('../db/knexfile.js'),
 var Project = Bookshelf.Model.extend({
     tableName: 'projects',
     organization: function () {
-      return this.belongsTo(Organization);
+      return this.belongsTo(Organization, 'organization_id');
     }
 });
 
