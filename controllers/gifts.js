@@ -116,4 +116,15 @@ module.exports.controller = function(app, router) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
+  router.route('/gifts/count')
+  .get(function (req, res) {
+    Gifts.forge()
+    .count('id')
+    .then(function(total) {
+      res.json({error: false, data: total.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
 }
