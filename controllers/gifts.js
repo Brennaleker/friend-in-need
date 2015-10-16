@@ -42,7 +42,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch gift
-  router.route('/gifts/:id')
+  router.route('/gift/:id')
   .get(function (req, res) {
     Gift.forge({id: req.params.id})
     .fetch()
@@ -94,11 +94,23 @@ module.exports.controller = function(app, router) {
     .then(function (gift) {
       gift.destroy()
       .then(function () {
-        res.json({error: true, data: {message: 'Volunteer successfully deleted'}});
+        res.json({error: true, data: {message: 'gift successfully deleted'}});
       })
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
       });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+  router.route('/gifts/approved')
+  .get(function (req, res) {
+    Gifts.forge()
+    .query('where', 'status', '=', 'approved')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});

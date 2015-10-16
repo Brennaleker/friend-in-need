@@ -34,7 +34,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch volunteer
-  router.route('/volunteers/:id')
+  router.route('/volunteer/:id')
   .get(function (req, res) {
     Volunteer.forge({id: req.params.id})
     .fetch()
@@ -83,6 +83,19 @@ module.exports.controller = function(app, router) {
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
       });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+  // fetch all Volunteers that are in status pending
+  router.route('/volunteers/pending')
+  .get(function (req, res) {
+    Volunteers.forge()
+    .query('where', 'approved', '=', 'pending')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});

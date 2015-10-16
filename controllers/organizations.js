@@ -99,7 +99,7 @@ module.exports.controller = function(app, router) {
   });
   router.route('/organizations/projects')
   .get(function (req, res) {
-    Project.forge({id: req.params.organization_id})
+    Project.forge({id: req.params.id})
     .fetch({withRelated: ['organizations']})
     .then(function (project) {
       var organizations = project.related('organizations');

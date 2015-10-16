@@ -34,7 +34,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch project
-  router.route('/projects/:id')
+  router.route('/project/:id')
   .get(function (req, res) {
     Project.forge({id: req.params.id})
     .fetch()
@@ -83,6 +83,55 @@ module.exports.controller = function(app, router) {
       .otherwise(function (err) {
         res.status(500).json({error: true, data: {message: err.message}});
       });
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+
+  router.route('/projects/pending')
+  .get(function (req, res) {
+    Projects.forge()
+    .query('where', 'status', '=', 'pending')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+  router.route('/projects/approved')
+  .get(function (req, res) {
+    Projects.forge()
+    .query('where', 'status', '=', 'approved')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+  router.route('/projects/funded')
+  .get(function (req, res) {
+    Projects.forge()
+    .query('where', 'status', '=', 'funded')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
+  router.route('/projects/denied')
+  .get(function (req, res) {
+    Projects.forge()
+    .query('where', 'status', '=', 'denied')
+    .fetch()
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
