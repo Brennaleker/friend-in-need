@@ -4,10 +4,10 @@
   "description": "Capstone project",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node app.js",
     "test": "clear; DB=test mocha --recursive",
-    "migrate": "node ./db/migrate.js",
-    "seed": "node ./db/seed.js"
+    "migrate": "node db/migrate.js",
+    "seed": "node db/seeds/seeder.js"
   },
   "repository": {
     "type": "git",

@@ -20,7 +20,7 @@ module.exports.controller = function(app, router) {
   // create a user
   .post(function (req, res) {
     User.forge({
-      username: req.body.username,
+      user_name: req.body.username,
       password: req.body.password,
       email: req.body.email,
       first_name: req.body.first_name,
@@ -58,7 +58,7 @@ module.exports.controller = function(app, router) {
     .fetch({require: true})
     .then(function (user) {
       user.save({
-        name: req.body.name || user.get('name'),
+        user_name: req.body.name || user.get('name'),
         email: req.body.email || user.get('email'),
         password: req.body.password || user.get('password'),
         first_name: req.body.first_name || user.get('first_name'),

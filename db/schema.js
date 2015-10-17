@@ -40,15 +40,15 @@ var Schema = {
     description: { type: 'text' },
     url: { type: 'string', maxlength: 250, nullable: false },
     quantity: { type: 'integer', nullable: false },
-    price_per: { type: 'integer', nullable: false },
-    total: {type: 'integer', nullable: false }
+    price_per: { type: 'float', nullable: false },
+    total: {type: 'float', nullable: false }
   },
 
   gifts: {
     id: { type: 'increments', nullable: false, primary: true },
     project_id: { type: 'integer', nullable: false, unsigned: true },
     donor_id: { type: 'integer', nullable: false, unsigned: true },
-    ammount: { type: 'integer', nullable: false },
+    ammount: { type: 'float', nullable: false },
     status: { type: 'string', maxlength: 100, nullabe: false },
     cc_name: { type: 'string', maxlenght: 150, nullable: false },
     cc_exp: { type: 'integer', nullable: false },
@@ -65,7 +65,7 @@ var Schema = {
     id: { type: 'increments', nullable: false, primary: true },
     organization_id: { type: 'integer', nullable: false, unsigned: true },
     title: { type: 'string', maxlength: 250, nullable: false },
-    decription: { type: 'text', maxlength: 750, nullable: false },
+    description: { type: 'text', maxlength: 750, nullable: false },
     status: { type: 'string', nullable: false },
     total: { type: 'float' }
   }
