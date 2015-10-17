@@ -24,6 +24,6 @@ fs.readdirSync(controllerPath).forEach(function (file) {
 
 app.use('/', router);
 
-app.listen(3000, function() {
-  console.log("✔ Express server listening on port %d in %s mode", 3000, app.get('env'));
+app.listen(3001, function() {
+  console.log("✔ Express server listening on port %d in %s mode", 3001, app.get('env'));
 });

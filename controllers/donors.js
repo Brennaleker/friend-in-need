@@ -20,11 +20,6 @@ module.exports.controller = function(app, router) {
   // create a donor
   .post(function (req, res) {
     Donor.forge({
-      billing_address_1: req.body.billing_address_1,
-      billing_address_2: req.body.billing_address_2,
-      billing_city: req.body.billing_city,
-      billing_state: req.body.billing_state,
-      billing_postal_code: req.body.billing_postal_code
     })
     .save()
     .then(function (donor) {
@@ -58,10 +53,6 @@ module.exports.controller = function(app, router) {
     .fetch({require: true})
     .then(function (donor) {
       donor.save({
-        billing_address_1: req.body.billing_address_1 || donor.get('billing_address_1'),
-        billing_address_2: req.body.billing_address_2 || donor.get('billing_address_2'),
-        billing_city: req.body.billing_city || ('billing_city'),
-        billing_state: req.body.billing_state || ('billing_state')
       })
       .then(function () {
         res.json({error: false, data: {message: 'Donor details updated'}});
