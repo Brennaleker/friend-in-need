@@ -37,7 +37,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch item
-  router.route('/items/:id')
+  router.route('/item/:id')
   .get(function (req, res) {
     Item.forge({id: req.params.id})
     .fetch()

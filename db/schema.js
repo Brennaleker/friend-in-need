@@ -1,6 +1,7 @@
 var Schema = {
   users: {
     id: { type: 'increments', nullable: false, primary: true },
+    password_digest: { type: 'string', maxlength: 150, nullable: false }
     email: { type: 'string', maxlength: 254, nullable: false, unique: true },
     user_name: { type: 'string', maxlength: 150, nullable: false, unique: true },
     first_name: { type: 'string', maxlength: 150, nullable: false },

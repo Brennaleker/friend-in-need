@@ -31,7 +31,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch donor
-  router.route('/donors/:id')
+  router.route('/donor/:id')
   .get(function (req, res) {
     Donor.forge({id: req.params.id})
     .fetch()
