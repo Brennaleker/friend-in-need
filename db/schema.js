@@ -66,7 +66,8 @@ var Schema = {
     organization_id: { type: 'integer', nullable: false, unsigned: true },
     title: { type: 'string', maxlength: 250, nullable: false },
     description: { type: 'text', maxlength: 750, nullable: false },
-    status: { type: 'string', nullable: false },
+    approval_status: { type: 'string', nullable: false },
+    fulfillment_status: { type: 'string', nullable: false },
     total: { type: 'float' }
   }
 };

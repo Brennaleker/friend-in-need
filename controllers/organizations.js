@@ -22,6 +22,7 @@ module.exports.controller = function(app, router) {
   // create a donor
   .post(function (req, res) {
     Organization.forge({
+      user_id: req.body.user_id,
       billing_address_1: req.body.billing_address_1,
       billing_address_2: req.body.billing_address_2,
       billing_city: req.body.billing_city,
@@ -38,7 +39,7 @@ module.exports.controller = function(app, router) {
   });
 
   // fetch organization
-  router.route('/organizations/:id')
+  router.route('/organization/:id')
     .get(function (req, res) {
       Organization.forge({id: req.params.id})
       .fetch()
@@ -97,17 +98,16 @@ module.exports.controller = function(app, router) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
-  router.route('/organizations/projects')
-  .get(function (req, res) {
-    Project.forge({id: req.params.id})
-    .fetch({withRelated: ['organizations']})
-    .then(function (project) {
-      var organizations = project.related('organizations');
-      res.json({error: false, data: organizations.toJSON()});
+  // fetch all projects belonging to an organization
+  router.route('/organization/:id/projects')
+  .get(function(req, res) {
+    Organization.forge({id: req.params.id})
+    .fetch({ withRelated: ['projects']})
+    .then(function (collection) {
+      res.json({error: false, data: collection.toJSON()});
     })
     .otherwise(function (err) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
-
 }

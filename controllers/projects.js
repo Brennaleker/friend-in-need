@@ -22,7 +22,8 @@ module.exports.controller = function(app, router) {
     Project.forge({
       title: req.body.title,
       description: req.body.description,
-      status: req.body.status
+      approval_status: req.body.status,
+      fulfillment_status: req.body.fulfillment_status
     })
     .save()
     .then(function (project) {
@@ -58,7 +59,8 @@ module.exports.controller = function(app, router) {
       project.save({
         title: req.body.title || ('title'),
         description: req.body.description || ('description'),
-        status: req.body.status || ('status')
+        approval_status: req.body.approval_status || ('approval_status'),
+        fulfillment_status: req.body.fulfillment_status || ('fulfillment_status')
       })
       .then(function () {
         res.json({error: false, data: {message: 'Project details updated'}});
@@ -92,7 +94,7 @@ module.exports.controller = function(app, router) {
   router.route('/projects/pending')
   .get(function (req, res) {
     Projects.forge()
-    .query('where', 'status', '=', 'pending')
+    .query('where', 'approval_status', '=', 'pending')
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -104,7 +106,7 @@ module.exports.controller = function(app, router) {
   router.route('/projects/approved')
   .get(function (req, res) {
     Projects.forge()
-    .query('where', 'status', '=', 'approved')
+    .query('where', 'approval_status', '=', 'approved')
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -113,10 +115,21 @@ module.exports.controller = function(app, router) {
       res.status(500).json({error: true, data: {message: err.message}});
     });
   });
+  router.route('/projects/approved/count')
+  .get(function (req, res) {
+    Projects.forge()
+    .count('where', 'approval_status', '=', 'approved')
+    .then(function (count) {
+      res.json({error: false, data: count.toJSON()});
+    })
+    .otherwise(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+  });
   router.route('/projects/funded')
   .get(function (req, res) {
     Projects.forge()
-    .query('where', 'status', '=', 'funded')
+    .query('where', 'fulfillment_status', '=', 'funded')
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});
@@ -128,7 +141,7 @@ module.exports.controller = function(app, router) {
   router.route('/projects/denied')
   .get(function (req, res) {
     Projects.forge()
-    .query('where', 'status', '=', 'denied')
+    .query('where', 'approval_status', '=', 'denied')
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});

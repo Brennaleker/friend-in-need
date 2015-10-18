@@ -9,6 +9,6 @@ TRUNCATE TABLE organizations;
 TRUNCATE TABLE items;
 \COPY items(id,project_id,name,url,description,quantity,price_per,total) from './db/seeds/items.csv' WITH CSV;
 TRUNCATE TABLE projects;
-\COPY projects(id,organization_id,title,description,status,total) from './db/seeds/projects.csv' WITH CSV;
+\COPY projects(id,organization_id,title,description,approval_status,fulfillment_status,total) from './db/seeds/projects.csv' WITH CSV;
 TRUNCATE TABLE gifts;
 \COPY gifts(id,project_id,donor_id,ammount,status,cc_name,cc_exp,cc_ccv,cc_number,cc_address_1,cc_address_2,cc_city,cc_state,cc_postal_code) from './db/seeds/gifts.csv' WITH CSV;
