@@ -23,7 +23,8 @@ module.exports.controller = function(app, router) {
       title: req.body.title,
       description: req.body.description,
       approval_status: req.body.status,
-      fulfillment_status: req.body.fulfillment_status
+      funding_status: req.body.funding_status,
+      shipping_status: req.body.shipping_status
     })
     .save()
     .then(function (project) {
@@ -60,7 +61,8 @@ module.exports.controller = function(app, router) {
         title: req.body.title || ('title'),
         description: req.body.description || ('description'),
         approval_status: req.body.approval_status || ('approval_status'),
-        fulfillment_status: req.body.fulfillment_status || ('fulfillment_status')
+        funding_status: req.body.funding_status || ('funding_status'),
+        shipping_status: req.body.shipping_status || ('shipping_status')
       })
       .then(function () {
         res.json({error: false, data: {message: 'Project details updated'}});
@@ -129,7 +131,7 @@ module.exports.controller = function(app, router) {
   router.route('/projects/funded')
   .get(function (req, res) {
     Projects.forge()
-    .query('where', 'fulfillment_status', '=', 'funded')
+    .query('where', 'funding_status', '=', 'funded')
     .fetch()
     .then(function (collection) {
       res.json({error: false, data: collection.toJSON()});

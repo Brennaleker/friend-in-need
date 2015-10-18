@@ -67,7 +67,8 @@ var Schema = {
     title: { type: 'string', maxlength: 250, nullable: false },
     description: { type: 'text', maxlength: 750, nullable: false },
     approval_status: { type: 'string', nullable: false },
-    fulfillment_status: { type: 'string', nullable: false },
+    funding_status: { type: 'string', nullable: false },
+    shipping_status: { type: 'string', nullable: false },
     total: { type: 'float' }
   }
 };
