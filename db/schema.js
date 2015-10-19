@@ -17,7 +17,7 @@ var Schema = {
     shipping_address_2: { type: 'string', maxlength: 150, nullable: false },
     shipping_city: { type: 'string', maxlength: 150, nullable: false },
     shipping_state: { type: 'string', maxlength: 150, nullable: false  },
-    shipping_postal_code: { type: 'string', maxlength: 150, nullable: false },
+    shipping_postal_code: { type: 'integer', maxlength: 5, nullable: false },
     approval_status: { type: 'string', nullable: false }
   },
 
@@ -59,7 +59,7 @@ var Schema = {
     cc_address_2: { type: 'string', maxlength: 150, nullable: false },
     cc_city: { type: 'string', maxlength: 150, nullable: false },
     cc_state: { type: 'string', maxlength: 150, nullable: false  },
-    cc_postal_code: { type: 'string', maxlength: 150, nullable: false }
+    cc_postal_code: { type: 'integer', maxlength: 5, nullable: false }
   },
 
   projects: {
