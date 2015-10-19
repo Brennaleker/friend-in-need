@@ -1,7 +1,5 @@
 TRUNCATE TABLE users;
-\COPY users(id,email,user_name,first_name,last_name) from './db/seeds/users.csv' WITH CSV;
-TRUNCATE TABLE donors;
-\COPY donors(id,user_id) from './db/seeds/donors.csv' WITH CSV;
+\COPY users(id,email,user_name,first_name,last_name,donor) from './db/seeds/users.csv' WITH CSV;
 TRUNCATE TABLE volunteers;
 \COPY volunteers(id,user_id,bio,approved,role) from './db/seeds/volunteers.csv' WITH CSV;
 TRUNCATE TABLE organizations;

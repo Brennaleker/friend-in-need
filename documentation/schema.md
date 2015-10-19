@@ -3,7 +3,8 @@
   **email**: account email, string  
   **user_name**: unique user name, string  
   **first_name**: user first name, string  
-  **last_name**: user last name, string
+  **last_name**: user last name, string  
+  **donor**: has this user donated to a project?
 
 #organizations table
   **id**: unique identifier, set to auto increment, integer  
@@ -25,11 +26,6 @@
   **approved**: whether or not the volunteer has been approved for volunteer access, string  
   **role**: whether the volunteer is volunteering for a tech role or as a project reviewer, string
 
-<!-- #donors
-  **id**: { type: 'increments', nullable: false, primary: true },
-  **user**id**: { type: 'integer', nullable: false, unsigned: true },
-}, -->
-
 #items table
   **id**: unique identifier, set to auto increment, integer  
   **project_id**: unique identifier, project association, integer  
@@ -42,7 +38,8 @@
 
 #gifts table
   **id**: unique identifier, set to auto increment, integer  
-  **project_id**: unique identifier, project association, integer  
+  **project_id**: unique identifier, project association, integer
+  **user_id**: unique identifier, user(donor) association, integer    
   **amount**: amount given, float  
   **status**: payment pending, approved or denied, string  
   **cc_name**: name on card, string  

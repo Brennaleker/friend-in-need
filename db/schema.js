@@ -4,7 +4,8 @@ var Schema = {
     email: { type: 'string', maxlength: 254, nullable: false, unique: true },
     user_name: { type: 'string', maxlength: 150, nullable: false, unique: true },
     first_name: { type: 'string', maxlength: 150, nullable: false },
-    last_name: { type: 'string', maxlength: 150, nullable: false }
+    last_name: { type: 'string', maxlength: 150, nullable: false },
+    donor: { type: 'boolean', nullable: false }
   },
 
   organizations: {
@@ -29,10 +30,10 @@ var Schema = {
     role: { type: 'text', maxlength: 150, nullable: false }
   },
 
-  donors: {
-    id: { type: 'increments', nullable: false, primary: true },
-    user_id: { type: 'integer', nullable: false, unsigned: true },
-  },
+  // donors: {
+  //   id: { type: 'increments', nullable: false, primary: true },
+  //   user_id: { type: 'integer', nullable: false, unsigned: true },
+  // },
 
   items: {
     id: { type: 'increments', nullable: false, primary: true },
