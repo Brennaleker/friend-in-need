@@ -19,7 +19,8 @@ var Schema = {
     shipping_city: { type: 'string', maxlength: 150, nullable: false },
     shipping_state: { type: 'string', maxlength: 150, nullable: false  },
     shipping_postal_code: { type: 'integer', maxlength: 5, nullable: false },
-    approval_status: { type: 'string', nullable: false }
+    approval_status: { type: 'string', nullable: false },
+    karma: { type: 'integer', nullable: false }
   },
 
   volunteers: {

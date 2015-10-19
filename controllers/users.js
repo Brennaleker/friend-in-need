@@ -25,7 +25,9 @@ module.exports.controller = function(app, router) {
       email: req.body.email,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      donor: req.body.donor
+      donor: req.body.donor,
+      karma: req.body.karma
+
     })
     .save()
     .then(function (user) {
@@ -64,7 +66,8 @@ module.exports.controller = function(app, router) {
         password: req.body.password || user.get('password'),
         first_name: req.body.first_name || user.get('first_name'),
         last_name: req.body.last_name || user.get('last_name'),
-        donor: req.body.donor || user.get('donor')
+        donor: req.body.donor || user.get('donor'),
+        karma: req.body.karma || user.get('karma')
       })
       .then(function () {
         res.json({error: false, data: {message: 'User details updated'}});
