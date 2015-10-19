@@ -15,7 +15,7 @@
   **shipping_address_2**: apt, suite, etc., string  
   **shipping_city**: city, string,  
   **shipping_state**: state, string  
-  **shipping_postal**code**: zip code, integer  
+  **shipping_postal__code**: zip code, integer  
   **approval_status:** approved, denied, pending, initiated at pending and updated by volunteers when information is vetted, string
 
 #volunteers table
@@ -33,9 +33,9 @@
 #items table
   **id**: unique identifier, set to auto increment, integer  
   **project_id**: unique identifier, project association, integer  
-  **name**: name of item, string
-  **description**: description of item, text
-  **url**: link to item, string
+  **name**: name of item, string  
+  **description**: description of item, text  
+  **url**: link to item, string  
   **quantity**: quantity requested, integer
   **price_per**: price per item, float  
   **total**: total cost of item, float
