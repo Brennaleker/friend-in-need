@@ -24,7 +24,14 @@ module.exports.controller = function(app, router) {
       description: req.body.description,
       approval_status: req.body.status,
       funding_status: req.body.funding_status,
-      shipping_status: req.body.shipping_status
+      shipping_status: req.body.shipping_status,
+      total: req.body.total,
+      population_served: req.body.population_served,
+      utilization: req.body.utilization,
+      typical_day: req.body.typical_day,
+      proposal_picture_url: req.body.proposal_picture_url,
+      funded_picture_url: req.body.funded_picture_url,
+      thank_you_sent: req.body.thank_you_sent
     })
     .save()
     .then(function (project) {
@@ -62,7 +69,14 @@ module.exports.controller = function(app, router) {
         description: req.body.description || ('description'),
         approval_status: req.body.approval_status || ('approval_status'),
         funding_status: req.body.funding_status || ('funding_status'),
-        shipping_status: req.body.shipping_status || ('shipping_status')
+        shipping_status: req.body.shipping_status || ('shipping_status'),
+        total: req.body.total || ('total'),
+        population_served: req.body.population_served || ('population_served'),
+        utilization: req.body.utilization || ('utilization'),
+        typical_day: req.body.typical_day || ('typical_day'),
+        proposal_picture_url: req.body.proposal_picture_url || ('proposal_picture_url'),
+        funded_picture_url: req.body.funded_picture_url || ('funded_picture_url'),
+        thank_you_sent: req.body.thank_you_sent || ('thank_you_sent')
       })
       .then(function () {
         res.json({error: false, data: {message: 'Project details updated'}});

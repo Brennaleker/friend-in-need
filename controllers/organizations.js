@@ -23,11 +23,12 @@ module.exports.controller = function(app, router) {
   .post(function (req, res) {
     Organization.forge({
       user_id: req.body.user_id,
-      billing_address_1: req.body.billing_address_1,
-      billing_address_2: req.body.billing_address_2,
-      billing_city: req.body.billing_city,
-      billing_state: req.body.billing_state,
-      billing_postal_code: req.body.billing_postal_code
+      shipping_state_address_1: req.body.shipping_state_address_1,
+      shipping_state_address_2: req.body.shipping_state_address_2,
+      shipping_state_city: req.body.shipping_state_city,
+      shipping_state: req.body.shipping_state,
+      shipping_state_postal_code: req.body.shipping_state_postal_code,
+      approval_status: req.body.approval_status
     })
     .save()
     .then(function (organiztion) {
@@ -64,12 +65,14 @@ module.exports.controller = function(app, router) {
           organization_name: req.body.organization_name || organization.get('organization_name'),
           blurb: req.body.blurb || organization.get('blurb'),
           shipping_address_1: req.body.shipping_address_1 || ('shipping_address_1'),
-          shipping_address_2: req.body.shipping_address_2 || ('billing_state'),
+          shipping_address_2: req.body.shipping_address_2 || ('shipping_state'),
           shipping_city: req.body.shipping_city || ('shipping_city'),
           shipping_state: req.body.shipping_state || ('shipping_state'),
           shipping_postal_code: req.body.shipping_postal_code || ('shipping_postal_code'),
-          population_served: req.body.population_served || ('population_served')
+          population_served: req.body.population_served || ('population_served'),
+          approval_status: req.body.approval_status || ('approval_status')
         })
+
         .then(function () {
           res.json({error: false, data: {message: 'Organization details updated'}});
         })

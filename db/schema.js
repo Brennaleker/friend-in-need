@@ -1,7 +1,6 @@
 var Schema = {
   users: {
     id: { type: 'increments', nullable: false, primary: true },
-    password_digest: { type: 'string', maxlength: 150, nullable: false }
     email: { type: 'string', maxlength: 254, nullable: false, unique: true },
     user_name: { type: 'string', maxlength: 150, nullable: false, unique: true },
     first_name: { type: 'string', maxlength: 150, nullable: false },
@@ -18,7 +17,8 @@ var Schema = {
     shipping_address_2: { type: 'string', maxlength: 150, nullable: false },
     shipping_city: { type: 'string', maxlength: 150, nullable: false },
     shipping_state: { type: 'string', maxlength: 150, nullable: false  },
-    shipping_postal_code: { type: 'string', maxlength: 150, nullable: false }
+    shipping_postal_code: { type: 'string', maxlength: 150, nullable: false },
+    approval_status: { type: 'string', nullable: false }
   },
 
   volunteers: {
@@ -70,7 +70,13 @@ var Schema = {
     approval_status: { type: 'string', nullable: false },
     funding_status: { type: 'string', nullable: false },
     shipping_status: { type: 'string', nullable: false },
-    total: { type: 'float' }
+    total: { type: 'float' },
+    population_served: { type: 'string', maxlength: 250, nullable: false },
+    utilization: { type: 'string', maxlength: 250, nullable: false },
+    typical_day: { type: 'string', maxlength: 250, nullable: false },
+    proposal_picture_url: { type: 'string', nullable: false },
+    funded_picture_url: { type: 'string' },
+    thank_you_sent: { type: 'boolean', nullable: false }
   }
 };
 
