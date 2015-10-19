@@ -36,7 +36,7 @@
   **name**: name of item, string  
   **description**: description of item, text  
   **url**: link to item, string  
-  **quantity**: quantity requested, integer
+  **quantity**: quantity requested, integer  
   **price_per**: price per item, float  
   **total**: total cost of item, float
 
