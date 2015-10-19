@@ -28,7 +28,8 @@ module.exports.controller = function(app, router) {
       shipping_state_city: req.body.shipping_state_city,
       shipping_state: req.body.shipping_state,
       shipping_state_postal_code: req.body.shipping_state_postal_code,
-      approval_status: req.body.approval_status
+      approval_status: req.body.approval_status,
+      karma: req.body.karma
     })
     .save()
     .then(function (organiztion) {
@@ -70,7 +71,8 @@ module.exports.controller = function(app, router) {
           shipping_state: req.body.shipping_state || ('shipping_state'),
           shipping_postal_code: req.body.shipping_postal_code || ('shipping_postal_code'),
           population_served: req.body.population_served || ('population_served'),
-          approval_status: req.body.approval_status || ('approval_status')
+          approval_status: req.body.approval_status || ('approval_status'),
+          karma: req.body.karma || ('karma')
         })
 
         .then(function () {

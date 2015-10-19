@@ -4,7 +4,7 @@
   **user_name**: unique user name, string  
   **first_name**: user first name, string  
   **last_name**: user last name, string  
-  **donor**: has this user donated to a project?
+  **donor**: has this user donated to a project?, boolean
 
 #organizations table
   **id**: unique identifier, set to auto increment, integer  
@@ -17,7 +17,8 @@
   **shipping_city**: city, string,  
   **shipping_state**: state, string  
   **shipping_postal__code**: zip code, integer  
-  **approval_status:** approved, denied, pending, initiated at pending and updated by volunteers when information is vetted, string
+  **approval_status:** approved, denied, pending, initiated at pending and updated by volunteers when information is vetted, string  
+  **karma**: amount of karma points available integer
 
 #volunteers table
   **id**: unique identifier, set to auto increment, integer  

@@ -1,9 +1,9 @@
 TRUNCATE TABLE users;
-\COPY users(id,email,user_name,first_name,last_name,donor,karma) from './db/seeds/users.csv' WITH CSV;
+\COPY users(id,email,user_name,first_name,last_name,donor) from './db/seeds/users.csv' WITH CSV;
 TRUNCATE TABLE volunteers;
 \COPY volunteers(id,user_id,bio,approved,role) from './db/seeds/volunteers.csv' WITH CSV;
 TRUNCATE TABLE organizations;
-\COPY organizations(id,user_id,organization_name,blurb,population_served,shipping_address_1,shipping_address_2,shipping_city,shipping_state,shipping_postal_code,approval_status) from './db/seeds/organizations.csv' WITH CSV;
+\COPY organizations(id,user_id,organization_name,blurb,population_served,shipping_address_1,shipping_address_2,shipping_city,shipping_state,shipping_postal_code,approval_status,karma) from './db/seeds/organizations.csv' WITH CSV;
 TRUNCATE TABLE items;
 \COPY items(id,project_id,name,url,description,quantity,price_per,total) from './db/seeds/items.csv' WITH CSV;
 TRUNCATE TABLE projects;
