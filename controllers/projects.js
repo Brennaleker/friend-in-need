@@ -26,9 +26,7 @@ module.exports.controller = function(app, router) {
       funding_status: req.body.funding_status,
       shipping_status: req.body.shipping_status,
       total: req.body.total,
-      population_served: req.body.population_served,
-      utilization: req.body.utilization,
-      typical_day: req.body.typical_day,
+      essay: req.body.essay,
       proposal_picture_url: req.body.proposal_picture_url,
       funded_picture_url: req.body.funded_picture_url,
       thank_you_sent: req.body.thank_you_sent
@@ -71,9 +69,7 @@ module.exports.controller = function(app, router) {
         funding_status: req.body.funding_status || ('funding_status'),
         shipping_status: req.body.shipping_status || ('shipping_status'),
         total: req.body.total || ('total'),
-        population_served: req.body.population_served || ('population_served'),
-        utilization: req.body.utilization || ('utilization'),
-        typical_day: req.body.typical_day || ('typical_day'),
+        essay: req.body.essay || ('essay'),
         proposal_picture_url: req.body.proposal_picture_url || ('proposal_picture_url'),
         funded_picture_url: req.body.funded_picture_url || ('funded_picture_url'),
         thank_you_sent: req.body.thank_you_sent || ('thank_you_sent')

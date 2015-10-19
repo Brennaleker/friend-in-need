@@ -71,9 +71,7 @@ var Schema = {
     funding_status: { type: 'string', nullable: false },
     shipping_status: { type: 'string', nullable: false },
     total: { type: 'float' },
-    population_served: { type: 'string', maxlength: 250, nullable: false },
-    utilization: { type: 'string', maxlength: 250, nullable: false },
-    typical_day: { type: 'string', maxlength: 250, nullable: false },
+    essay: { type: 'string', maxlength: 400, nullable: false },
     proposal_picture_url: { type: 'string', nullable: false },
     funded_picture_url: { type: 'string' },
     thank_you_sent: { type: 'boolean', nullable: false }
